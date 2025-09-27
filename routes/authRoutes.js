@@ -1,26 +1,32 @@
-import passport from 'passport';  // Importing passport for authentication
-import express from 'express';    // Importing express for the web framework
-import { googleSignInController } from '../controllers/authController.js';  // Importing the Google sign-in controller
-import dotenv from 'dotenv';      // Importing dotenv to load environment variables
+import passport from "passport";
+import express from "express";
+import { googleSignInController } from "../controllers/authController.js";
+import dotenv from "dotenv";
 
-dotenv.config();  // Loading environment variables from .env file
+dotenv.config();
 
-const authRouter = express.Router(); // Creating an instance of express Router for handling authentication routes
-const googleSignIn = new googleSignInController(); // Creating an instance of GoogleSignInController
+const authRouter = express.Router();
+const googleSignIn = new googleSignInController();
 
-// OAuth2 login with Google
-authRouter.get("/google", passport.authenticate('google', { scope: ['email', 'profile'] }));
-
-// Google OAuth2 callback
-authRouter.get("/google/callback",
-    passport.authenticate("google", {
-        successRedirect: process.env.CLIENT_URL,
-        failureRedirect: "/login/failed"
-    })
+// Login Google
+authRouter.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
 );
 
-// Routes for handling login success and failure
+// Callback từ Google
+authRouter.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/auth/login/success", 
+    failureRedirect: "/auth/login/failed",  
+  })
+);
+
+// Login thành công
 authRouter.get("/login/success", googleSignIn.signInSuccess);
+
+// Login thất bại
 authRouter.get("/login/failed", googleSignIn.signInFailed);
 
-export default authRouter; // Exporting the Auth Router
+export default authRouter;

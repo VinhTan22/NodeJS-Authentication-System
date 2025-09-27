@@ -3,31 +3,38 @@
   <% if (message) { %>
     <p style="color: red;"><%= message %></p>
   <% } %>
+
+  <!-- Form login bằng email/password -->
   <form action="/user/signin" method="post">
     <input type="email" name="email" placeholder="Email" required /><br /><br />
-    <input
-      type="password"
-      name="password"
-      placeholder="Password"
-      required
-    /><br /><br />
+    <input type="password" name="password" placeholder="Password" required /><br /><br />
+    
     <!-- reCAPTCHA -->
     <div class="g-recaptcha" data-sitekey="<%= siteKey %>"></div>
     <br />
-    <button type="submit" class="btn btn-light">
-      Sign In
-    </button>
+
+    <button type="submit" class="btn btn-light">Sign In</button>
   </form>
+
+  <hr />
+
+  <!-- Google Sign In -->
+  <div>
+    <p>Or sign in with:</p>
+    <a href="/auth/google">
+      <img 
+        src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"
+        alt="Sign in with Google"
+        style="cursor:pointer; height:40px;" />
+    </a>
+  </div>
+
   <br />
 
-  <!-- Sign-in Google Auth -->
-  <a href="/auth/google"><strong>Sign In with Google</strong></a> &nbsp;&nbsp;
-
-  <!-- Link to forgot password page -->
-  <a href="/user/forgot-password"><strong>Forgot Password?</strong></a><br>
-
+  <!-- Forgot password + signup links -->
+  <a href="/user/forgot-password"><strong>Forgot Password?</strong></a><br />
   <p>
-    <strong>Don't have an account?</strong> &nbsp;
+    <strong>Don't have an account?</strong>
     <a href="/user/signup"><strong>Sign up</strong></a>
   </p>
 </section>
